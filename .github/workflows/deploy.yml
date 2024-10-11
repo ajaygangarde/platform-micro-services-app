@@ -1,0 +1,48 @@
+name: Deploy to ECS using Docker Compose
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Log in to Amazon ECR
+      - name: Log in to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+      # Step 3: Build, tag, and push service-job-board-post image to ECR
+      - name: Build, tag, and push service-job-board-post
+        run: |
+          docker-compose -f docker-compose-prod.yml build service-job-board-post
+          docker tag service-job-board-post:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
+
+      # Step 4: Build, tag, and push service-job-board-user image to ECR
+      - name: Build, tag, and push service-job-board-user
+        run: |
+          docker-compose -f docker-compose-prod.yml build service-job-board-user
+          docker tag service-job-board-user:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
+
+      # Step 5: Build, tag, and push frontend image to ECR
+      - name: Build, tag, and push frontend
+        run: |
+          docker-compose -f docker-compose-prod.yml build frontend
+          docker tag frontend:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/frontend:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/frontend:latest
+
+      # Step 6: Deploy to ECS using Docker Compose
+      - name: Deploy to ECS using Docker Compose
+        run: |
+          docker context create ecs myecscontext
+          docker context use myecscontext
+          docker-compose -f docker-compose-prod.yml up
