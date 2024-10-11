@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   service-job-board-post:
-  uild:
-    context: ./service-job-board-post
+    build: 
+      context: ./service-job-board-post
     image: 148761657112.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post:latest
     ports:
       - "4000:4000"
@@ -19,7 +19,8 @@ services:
       - mysql
 
   service-job-board-user:
-    context: ./service-job-board-user
+    build: 
+      context: ./service-job-board-user
     image: 148761657112.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user:latest
     ports:
       - "5000:5000"
@@ -35,6 +36,8 @@ services:
       - mysql
 
   frontend:
+    build: 
+      context: ./frontend
     image: 148761657112.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
     ports:
       - "80:80"
