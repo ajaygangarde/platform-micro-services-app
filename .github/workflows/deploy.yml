@@ -55,14 +55,14 @@ jobs:
       # Step 6: Deploy service-job-board-post to ECS
       - name: Deploy service-job-board-post to ECS
         run: |
-          aws ecs update-service --cluster job-board-skillab-cluster --service service-job-board-post --force-new-deployment
+          aws ecs update-service --cluster  job-board-skillab-cluster --service job-board-skillab-service --force-new-deployment
 
       # Step 7: Deploy service-job-board-user to ECS
       - name: Deploy service-job-board-user to ECS
         run: |
-          aws ecs update-service --cluster job-board-skillab-cluster --service service-job-board-user --force-new-deployment
+          aws ecs update-service --cluster job-board-skillab-cluster --service job-board-skillab-service --force-new-deployment
 
       # Step 8: Deploy frontend to ECS
       - name: Deploy frontend to ECS
         run: |
-          aws ecs update-service --cluster job-board-skillab-cluster --service frontend --force-new-deployment
+          aws ecs update-service --cluster job-board-skillab-cluster --service job-board-skillab-service --force-new-deployment
