@@ -1,9 +1,10 @@
 name: Deploy to ECS using Docker Compose
 
 on:
-  push:
-    branches:
-      - main  # Trigger deployment on pushes to the main branch
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 
 jobs:
   deploy:
