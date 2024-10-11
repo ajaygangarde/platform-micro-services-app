@@ -51,9 +51,18 @@ jobs:
           docker tag 148761657112.dkr.ecr.us-east-1.amazonaws.com/frontend:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/frontend:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/frontend:latest
 
-      # Step 6: Deploy to ECS using Docker Compose
-      - name: Deploy to ECS using Docker Compose
+
+      # Step 6: Deploy service-job-board-post to ECS
+      - name: Deploy service-job-board-post to ECS
         run: |
-          docker context create ecs myecscontext
-          docker context use myecscontext
-          docker-compose -f docker-compose-prod.yml up
+          aws ecs update-service --cluster job-board-skillab-cluster --service service-job-board-post --force-new-deployment
+
+      # Step 7: Deploy service-job-board-user to ECS
+      - name: Deploy service-job-board-user to ECS
+        run: |
+          aws ecs update-service --cluster job-board-skillab-cluster --service service-job-board-user --force-new-deployment
+
+      # Step 8: Deploy frontend to ECS
+      - name: Deploy frontend to ECS
+        run: |
+          aws ecs update-service --cluster job-board-skillab-cluster --service frontend --force-new-deployment
