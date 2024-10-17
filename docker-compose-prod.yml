@@ -15,8 +15,8 @@ services:
       - DB_NAME=job_board_db
     networks:
       - job-board-network
-    depends_on:
-      - mysql
+    # depends_on:
+    #   - mysql
 
   service-job-board-user:
     build: 
@@ -32,8 +32,8 @@ services:
       - DB_NAME=job_board_db
     networks:
       - job-board-network
-    depends_on:
-      - mysql
+    # depends_on:
+    #   - mysql
 
   frontend:
     build: 
