@@ -34,14 +34,14 @@ jobs:
       - name: Build, tag, and push service-job-board-post
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-post
-          docker tag service-job-board-post ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post
+          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post
 
       # Step 4: Build, tag, and push service-job-board-user image to ECR
       - name: Build, tag, and push service-job-board-user
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-user
-          docker tag service-job-board-user ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user
+          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user
 
       # Step 6: Deploy updated image to ECS service-job-board-post
@@ -49,7 +49,7 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster job-board-app-cluster \
-            --service jjob-board-post-service \
+            --service job-board-post-service \
             --force-new-deployment
 
       # Step 7: Deploy updated image to ECS service-job-board-user
