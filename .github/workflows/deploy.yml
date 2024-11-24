@@ -34,27 +34,29 @@ jobs:
       - name: Build, tag, and push service-job-board-post
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-post
-          docker tag service-job-board-post:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
+          docker tag service-job-board-post ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
 
       # Step 4: Build, tag, and push service-job-board-user image to ECR
       - name: Build, tag, and push service-job-board-user
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-user
-          docker tag service-job-board-user:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
+          docker tag service-job-board-user ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
 
-      # Step 6: Deploy service-job-board-post to ECS
+      # Step 6: Deploy updated image to ECS service-job-board-post
       - name: Deploy service-job-board-post to ECS
         run: |
-          aws ecs update-service --cluster  job-board-cluster-v1 --service job-board-skillab-service-v1 --force-new-deployment
+          aws ecs update-service \
+            --cluster job-board-app-cluster \
+            --service jjob-board-post-service \
+            --force-new-deployment
 
-      # Step 7: Deploy service-job-board-user to ECS
-      # - name: Deploy service-job-board-user to ECS
-      #   run: |
-      #     aws ecs update-service --cluster job-board-skillab-cluster --service job-board-skillab-service --force-new-deployment
-
-      # # Step 8: Deploy frontend to ECS
-      # - name: Deploy frontend to ECS
-      #   run: |
-      #     aws ecs update-service --cluster job-board-skillab-cluster --service job-board-skillab-service --force-new-deployment
+      # Step 7: Deploy updated image to ECS service-job-board-user
+      - name: Deploy service-job-board-user to ECS
+        run: |
+          aws ecs update-service \
+            --cluster job-board-app-cluster \
+            --service job-board-user-service \
+            --force-new-deployment
+    
