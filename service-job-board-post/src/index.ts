@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 
 const app = express();
-const port = 4000;
+const port = 4001;
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Job Board Post Service');

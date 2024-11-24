@@ -4,12 +4,12 @@ services:
   service-job-board-post:
     build: 
       context: ./service-job-board-post
-    image: 148761657112.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post:latest
+    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post:latest
     ports:
-      - "4000:4000"
+      - "4001:4001"
     environment:
       - NODE_ENV=production
-      - PORT=4000
+      - PORT=4001
     # environment:
     #   - NODE_ENV=production
     #   - DB_HOST=mysql
@@ -21,22 +21,22 @@ services:
     # depends_on:
     #   - mysql
 
-  # service-job-board-user:
-  #   build: 
-  #     context: ./service-job-board-user
-  #   image: 148761657112.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user:latest
-  #   ports:
-  #     - "5000:5000"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - DB_HOST=mysql
-  #     - DB_USER=root
-  #     - DB_PASSWORD=rootpassword
-  #     - DB_NAME=job_board_db
-  #   networks:
-  #     - job-board-network
-  #   # depends_on:
-  #   #   - mysql
+  service-job-board-user:
+    build: 
+      context: ./service-job-board-user
+    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user:latest
+    ports:
+      - "4002:4002"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=job_board_db
+    networks:
+      - job-board-network
+    # depends_on:
+    #   - mysql
 
   # frontend:
   #   build: 
