@@ -7,6 +7,6 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Job Board Post Service');
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://3.237.66.149:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running at http://localhost:${port}`);
 });

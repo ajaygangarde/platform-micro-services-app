@@ -7,6 +7,6 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Job Board User Service');
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server running at http://localhost:${port}`);
 });
