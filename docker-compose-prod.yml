@@ -4,7 +4,7 @@ services:
   service-job-board-post:
     build: 
       context: ./service-job-board-post
-    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post
+    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post:latest
     ports:
       - "4001:4001"
     environment:
@@ -24,7 +24,7 @@ services:
   service-job-board-user:
     build: 
       context: ./service-job-board-user
-    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user
+    image: 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user:latest
     ports:
       - "4002:4002"
     environment:
@@ -33,6 +33,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=rootpassword
       - DB_NAME=job_board_db
+      - PORT=4002
     networks:
       - job-board-network
     # depends_on:

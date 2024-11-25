@@ -34,15 +34,15 @@ jobs:
       - name: Build, tag, and push service-job-board-post
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-post
-          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post
+          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-post:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-post:latest
 
       # Step 4: Build, tag, and push service-job-board-user image to ECR
       - name: Build, tag, and push service-job-board-user
         run: |
           docker compose -f docker-compose-prod.yml build service-job-board-user
-          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user
+          docker tag 194722438131.dkr.ecr.us-east-1.amazonaws.com/service-job-board-user:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/service-job-board-user:latest
 
       # Step 6: Deploy updated image to ECS service-job-board-post
       - name: Deploy service-job-board-post to ECS
