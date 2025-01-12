@@ -22,11 +22,12 @@ const processNotificationMessages = async () => {
     if (response.Messages) {
       for (const message of response.Messages) {
         // const jobDetails = JSON.parse(message['Body'] || '');
-        const jobDetails = message['Body'] || "DUMMY DATA";
+        const jobDetails = message['Body'] as any
+        const postDetails = JSON.parse(jobDetails.message);
         // console.log('Processing notification for new job:', jobDetails.title);
 
         // Simulate sending a notification (e.g., email, push notification)
-        console.log(`Notification sent for job: ${jobDetails}`);
+        console.log(`Notification sent for job: ${postDetails}`);
 
         // Delete the message after successful processing
         await SQS.deleteMessage({
