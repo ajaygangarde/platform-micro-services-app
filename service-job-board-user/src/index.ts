@@ -6,7 +6,7 @@ const port = 4002;
 
 // AWS SQS Configuration
 const SQS = new AWS.SQS({ region: 'us-east-1' }); // Replace with your region
-const queueUrl = 'https://sqs.us-east-1.amazonaws.com/account-id/NotificationQueue'; // Replace with your SQS Queue URL
+const queueUrl = 'https://sqs.us-east-1.amazonaws.com/194722438131/NotificationToUsersQueue'; // Replace with your SQS Queue URL
 
 // SQS Polling Function
 const processNotificationMessages = async () => {
